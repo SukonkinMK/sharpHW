@@ -19,32 +19,66 @@ namespace hw1
         }
 
 
-        public void Divide(int x)
+        public void Divide(string x)
         {
-            Result /= x;
-            PrintResult();
-            LastResult.Push(Result);
+            if (DoubleTryPars(x, out double res))
+            {
+                CheckNegative(res);
+                if (res == 0) 
+                {
+                    throw new CalculatorDivideByZeroException("Деление на ноль");
+                }
+                Result /= res;
+                PrintResult();
+                LastResult.Push(Result);
+            }
+            else
+                throw new CalculatorFormatException("Ведено не число");
+            
         }
 
-        public void Multy(int x)
+        public void Multy(string x)
         {
-            Result *= x;
-            PrintResult();
-            LastResult.Push(Result);
+            if (DoubleTryPars(x, out double res))
+            {
+                CheckNegative(res);
+                Result *= res;
+                PrintResult();
+                LastResult.Push(Result);
+            }
+            else
+                throw new CalculatorFormatException("Ведено не число");
         }
 
-        public void Sub(int x)
+        public void Sub(string x)
         {
-            Result -= x;
-            PrintResult();
-            LastResult.Push(Result);
+            if (DoubleTryPars(x, out double res))
+            {
+                CheckNegative(res);
+                Result -= res;
+                if(Result < 0)
+                {
+                    Result += res;
+                    throw new CalculatorExeption("При разности получилось отрицательное число. Операция отменена");
+                }
+                PrintResult();
+                LastResult.Push(Result);
+            }
+            else
+                throw new CalculatorFormatException("Ведено не число");
         }
 
-        public void Sum(int x)
+        public void Sum(string x)
         {
-            Result += x;
-            PrintResult();
-            LastResult.Push(Result);
+            if (DoubleTryPars(x, out double res))
+            {
+                CheckNegative(res);
+                Result += res;
+                PrintResult();
+                LastResult.Push(Result);
+            }
+            else
+                throw new CalculatorFormatException("Ведено не число");
         }
         public void CancelLast()
         {
@@ -61,6 +95,23 @@ namespace hw1
             {
                 Console.WriteLine("Невозможно отменить послдеднее действие!");
             }
+        }
+
+        private bool DoubleTryPars(string str, out double res)
+        {
+            res = 0;
+            if (double.TryParse(str, out double result))
+            {
+                res = result;
+                return true;
+            }
+            else
+                return false;
+        }
+        private void CheckNegative(double x)
+        {
+            if (x < 0)
+                throw new CalculatorExeption("Введен отрицательный аргумент");
         }
     }
 }
