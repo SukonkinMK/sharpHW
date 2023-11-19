@@ -3,7 +3,7 @@
 var calc = new Calc();
 calc.MyEventHandler += Calc_MyEventHandler;
 
-var map = new Dictionary<string, Action<int>>();
+var map = new Dictionary<string, Action<string>>();
 map.Add("+", calc.Sum);
 map.Add("-", calc.Sub);
 map.Add("*", calc.Multy);
@@ -12,7 +12,6 @@ map.Add("/", calc.Divide);
 Console.WriteLine("Результат = 0");
 while (true)
 {
-
     Console.Write("Введите действие. Доступны операции: +,-,*,/. Для выхода введите exit: ");
     string? command = Console.ReadLine();
 
@@ -22,12 +21,27 @@ while (true)
         {
             Console.Write("Введите целое число для операции: ");
             string? number = Console.ReadLine();
-            if(number != null && int.TryParse(number, out int num))
+            if(number != null && number.Length != 0)
             {
-                map[command](num);
+                try 
+                { 
+                    map[command](number); 
+                }
+                catch (CalculatorFormatException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                catch (CalculatorDivideByZeroException ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+                catch (CalculatorExeption ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }                
             }
             else
-                Console.WriteLine("Ошибка ввода числа");
+                Console.WriteLine("Ошибка, введена пустая строка");
         }
         else if(command.Equals("exit"))
         {

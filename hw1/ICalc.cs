@@ -9,10 +9,10 @@ namespace hw1
     public interface ICalc
     {
         double Result { get; set; }
-        double Sum(int x);
-        double Sub(int x);
-        double Multy(int x);
-        double Divide(int x);
+        double Sum(string x);
+        double Sub(string x);
+        double Multy(string x);
+        double Divide(string x);
         
         event EventHandler<EventArgs> MyEventHandler;
     }
