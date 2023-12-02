@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "hw1", "hw1\hw1.csproj", "{A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "Network\Network.csproj", "{8DB32467-0631-49D4-B9B1-6B1B40F0D93A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkClient", "NetworkClient\NetworkClient.csproj", "{1B88BC79-D66B-414B-B6C0-A9900260E53E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{8DB32467-0631-49D4-B9B1-6B1B40F0D93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8DB32467-0631-49D4-B9B1-6B1B40F0D93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8DB32467-0631-49D4-B9B1-6B1B40F0D93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B88BC79-D66B-414B-B6C0-A9900260E53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B88BC79-D66B-414B-B6C0-A9900260E53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B88BC79-D66B-414B-B6C0-A9900260E53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B88BC79-D66B-414B-B6C0-A9900260E53E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
