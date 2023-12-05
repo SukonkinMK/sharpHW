@@ -5,6 +5,8 @@ using System.Text;
 
 internal class Program
 {
+    private static bool serverStatus = true;
+
     static void Main(string[] args)
     {
         Server("Hello");
@@ -20,24 +22,37 @@ internal class Program
 
     public static void Server(string name)
     {
-        UdpClient udpClient = new UdpClient(12345);
+        using UdpClient udpClient = new UdpClient(12345);
         IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Any, 0);
 
         Console.WriteLine("Сервер ждет сообщение от клиента");
 
-        while (true)
+        while (serverStatus)
         {
             byte[] buffer = udpClient.Receive(ref iPEndPoint);
-
-            if (buffer == null) break;
             var messageText = Encoding.UTF8.GetString(buffer);
-
-            Message message = Message.DeserializeFromJson(messageText);
-            message.Print();
-
-            byte[] reply = Encoding.UTF8.GetBytes("Сообщение получено");
-            udpClient.Send(reply, reply.Length, iPEndPoint);
+            if (serverStatus)
+            {
+                new Thread(() =>
+                {
+                    try
+                    {
+                        Message message = Message.DeserializeFromJson(messageText);
+                        message.Print();
+                        if (message.Text.Equals("exit"))
+                            throw new ArgumentException("Exit");
+                        byte[] reply = Encoding.UTF8.GetBytes("Сообщение получено");
+                        udpClient.Send(reply, reply.Length, iPEndPoint);
+                    }
+                    catch (ArgumentException)
+                    {
+                        serverStatus = false;
+                        byte[] reply = Encoding.UTF8.GetBytes("ended");
+                        udpClient.Send(reply, reply.Length, iPEndPoint);
+                        Console.WriteLine("Работа сервера завершена");
+                    }
+                }).Start();
+            }            
         }
     }
-
 }

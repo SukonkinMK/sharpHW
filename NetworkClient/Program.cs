@@ -36,12 +36,16 @@ namespace Client
                 udpClient.Send(data, data.Length, iPEndPoint);
 
                 byte[] buffer = udpClient.Receive(ref iPEndPoint);
-                if(buffer != null)
+                string replyText = Encoding.UTF8.GetString(buffer);
+                if (replyText.Equals("ended"))
                 {
-                    Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                    udpClient.Send(data, data.Length, iPEndPoint);
+                    Console.WriteLine("Сервер завершил работу");
+                    break;
                 }
+                Console.WriteLine(replyText);
             }
-
+            Console.WriteLine("Работа клиента завершена");
         }
     }
 }
