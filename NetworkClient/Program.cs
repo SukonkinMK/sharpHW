@@ -17,19 +17,42 @@ namespace Client
         {
             UdpClient udpClient = new UdpClient();
             IPEndPoint iPEndPoint = new IPEndPoint(IPAddress.Parse(ip), 12345);
-
+            IBuilder builder = new MessageBuilder();
+            builder.BuildNickNameFrom(From);
+            
             while (true)
             {
-                string messageText;
+                string input;
+                string messageText = "";
+                string address = "";
                 do
                 {
                     Console.Write("Введите сообщение: ");
-                    messageText = Console.ReadLine();
-
+                    input = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        if (input.Split(" ").Length >= 2)
+                        {
+                            address = input.Split(" ")[0];
+                            messageText = input.Split(" ")[1];
+                        }
+                        else if (input.Split(" ").Length == 1)
+                            messageText = input;
+                    }
                 }
                 while (string.IsNullOrEmpty(messageText));
-
-                Message message = new Message() { Text = messageText, NicknameFrom = From, NicknameTo = "Server", DateTime = DateTime.Now };
+                builder.BuildText(messageText);
+                builder.BuildNickNameTo(address);
+                if(address.Length > 0)
+                {
+                    if (messageText.Contains("register"))
+                        builder.BuildCommandToServer(Command.Register);
+                    else if (messageText.Contains("delete"))
+                        builder.BuildCommandToServer(Command.Delete);
+                    else if (messageText.Contains("exit"))
+                        builder.BuildCommandToServer(Command.List);
+                }
+                Message message = builder.Build();
                 string json = message.SerializeMessageToJson();
 
                 byte[] data = Encoding.UTF8.GetBytes(json);
