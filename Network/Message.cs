@@ -10,6 +10,7 @@ namespace Network
     public class Message
     {
         public string Text { get; set; }
+        public Command CommandToServer { get; set; }
         public DateTime DateTime { get; set; }
         public string NicknameFrom { get; set; }
         public string NicknameTo { get; set; }
