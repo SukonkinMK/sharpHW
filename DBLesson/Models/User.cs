@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBLesson
+namespace DBLesson.Models
 {
     public class User
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DBLesson
+namespace DBLesson.Models
 {
     public class ChatContext : DbContext
     {
@@ -24,7 +24,7 @@ namespace DBLesson
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(@"Server=localhost;Database=myDataBase;Uid=root;Pwd=123456;")
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=GB;Integrated Security=False;TrustServerCertificate=True; Trusted_Connection=True;")
                 .UseLazyLoadingProxies();
         }
 

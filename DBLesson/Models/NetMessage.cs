@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace DBLesson
+namespace DBLesson.Models
 {
     public enum Command
     {
@@ -21,6 +22,7 @@ namespace DBLesson
         public string? NickNameFrom { get; set; }
         public string? NickNameTo { get; set; }
 
+        public IPEndPoint? EndPoint { get; set; }
         public Command Command { get; set; }
 
         public string SerialazeMessageToJSON() => JsonSerializer.Serialize(this);
